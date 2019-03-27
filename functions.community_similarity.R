@@ -395,7 +395,7 @@ fasterUniFrac <- function(o.t, tree, distance="UniFrac_unweighted", blocksize=10
 	#Get tree in "postorder" order
 	z = reorder.phylo(tree, order="postorder");
 	#Get "tip ages", or horizontal position of edges in re-ordered phylo object
-	tip.ages = ape_node_depth_edge_length(Ntip = length(tree$tip.label), Nnode = tree$Nnode, edge = z$edge, Nedge = nrow(tree$edge)[1], edge.length = z$edge.length);
+	tip.ages = node.depth.edgelength(z)
 	#Keep only tips
 	tip.ages <- tip.ages[1:length(tree$tip.label)]
 	#Rename (when in doubt)
