@@ -539,7 +539,7 @@ fast.cophenetic.phylo <- function(x, nblocks=1000, use.cores=detectCores()) {
 	x = reorder.phylo(x, order="postorder");
 	tip.order <- order(x$tip.label);
 	#Get "tip ages", or horizontal position of edges in re-ordered phylo object
-	node.ages = ape_node_depth_edge_length(Ntip = Ntip(x), Nnode = x$Nnode, edge = x$edge, Nedge = nrow(x$edge)[1], edge.length = x$edge.length);
+	node.ages = node.depth.edgelength(x)
 	#Get all (unique) combinations of tip.labels
 	my.combs <- t(combnPrim(tip.order, 2));
 	#Split combinations into processable chunks
@@ -575,11 +575,4 @@ fast.cophenetic.phylo <- function(x, nblocks=1000, use.cores=detectCores()) {
 	########################
 	#Return
 	mat.out
-}
-
-ape_node_depth_edge_length <- function(Ntip, Nnode, edge, Nedge, edge.length){
-  .C(ape:::node_depth_edgelength, PACKAGE="ape", as.integer(Ntip),
-     as.integer(Nnode), as.integer(edge[, 1]),
-     as.integer(edge[, 2]), as.integer(Nedge),
-     as.double(edge.length), double(Ntip + Nnode))[[7]]
 }
